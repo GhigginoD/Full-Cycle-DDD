@@ -4,12 +4,12 @@ export default class Customer {
   private _email!: string;
   private _active: boolean;
   private _rewardPoints: number;
+
   constructor(id: string, name: string) {
     this._id = id;
     this._name = name;
     this._active = true;
     this._rewardPoints = 100;
-
     this.validate();
   }
 
@@ -25,6 +25,7 @@ export default class Customer {
   addRewardPoints(points: number) {
     this._rewardPoints += points;
   }
+
   get rewardPoints() {
     return this._rewardPoints;
   }
