@@ -12,8 +12,8 @@ export default class Product {
     this.validate();
   }
   validate() {
-    if (this._id) throw new Error("id is required");
-    if (this._name) throw new Error("name is required");
-    if (this._price) throw new Error("price is required");
+    if (!this._id) throw new Error("id is required");
+    if (!this._name) throw new Error("name is required");
+    if (this._price <= 0) throw new Error("price should be greater than zero");
   }
 }
