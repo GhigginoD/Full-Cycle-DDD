@@ -5,11 +5,17 @@ export default class Customer {
   private _active: boolean;
   private _rewardPoints: number;
 
-  constructor(id: string, name: string, email?: string) {
+  constructor(
+    id: string,
+    name: string,
+    email?: string,
+    active?: boolean,
+    rewardPoints?: number
+  ) {
     this._id = id;
     this._name = name;
-    this._active = true;
-    this._rewardPoints = 100;
+    this._active = active || true;
+    this._rewardPoints = rewardPoints || 100;
     this._email = email;
     this.validate();
   }
@@ -40,5 +46,8 @@ export default class Customer {
   }
   get id() {
     return this._id;
+  }
+  get email(): string | undefined {
+    return this._email;
   }
 }

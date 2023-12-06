@@ -15,7 +15,7 @@ export default class CustomerModel extends Model {
   @Column({ allowNull: true })
   declare email: string;
 
-  @Column({ allowNull: false })
+  @Column
   declare active: boolean;
 
   @Column({ allowNull: false })
