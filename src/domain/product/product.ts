@@ -16,4 +16,16 @@ export default class Product {
     if (!this._name) throw new Error("name is required");
     if (this._price <= 0) throw new Error("price should be greater than zero");
   }
+  get name() {
+    return this._name;
+  }
+  get description() {
+    return this._description;
+  }
+  get price() {
+    return this._price;
+  }
+  get id() {
+    return this._id;
+  }
 }
