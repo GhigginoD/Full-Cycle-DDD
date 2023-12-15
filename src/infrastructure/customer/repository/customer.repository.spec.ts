@@ -27,7 +27,7 @@ describe("Customer repository test", () => {
 
     const customer = new Customer("123", "davi");
     await customerRepository.create(customer);
-    const customerDB = await customerRepository.find("123");
+    const customerDB = await customerRepository.find(customer.id);
     expect.assertions(1);
     expect({
       id: customerDB.id,

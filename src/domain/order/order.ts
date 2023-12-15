@@ -27,4 +27,14 @@ export default class Order {
       return (total += item.total());
     }, 0);
   }
+
+  get orderId() {
+    return this._orderId;
+  }
+  get items() {
+    return this._items;
+  }
+  get customerId() {
+    return this._customerId;
+  }
 }
