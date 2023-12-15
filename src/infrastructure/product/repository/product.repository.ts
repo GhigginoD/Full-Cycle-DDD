@@ -1,17 +1,59 @@
-import Order from "../../../domain/order/order";
-import OrderRepositoryInterface from "../../../domain/order/order-repository.interface";
+import Product from "../../../domain/product/product";
+import ProductRepositoryInterface from "../../../domain/product/product-repository.interface";
+import ProductModel from "./product.model";
 
-export default class ProductRepository implements OrderRepositoryInterface {
-  findAll(): Promise<Order[]> {
-    throw new Error("Method not implemented.");
+export default class ProductRepository implements ProductRepositoryInterface {
+  async findAll(): Promise<Product[]> {
+    const lstProducts: Product[] = [];
+    const productDB = await ProductModel.findAll();
+    productDB.forEach((product: ProductModel) => {
+      const p = new Product(
+        product.id,
+        product.name,
+        product.description,
+        product.price
+      );
+      lstProducts.push(p);
+    });
+    return lstProducts;
   }
-  find(id: string): Promise<Order> {
-    throw new Error("Method not implemented.");
+
+  async find(id: string): Promise<Product> {
+    let productDB;
+    try {
+      productDB = await ProductModel.findOne({
+        where: { id: id },
+        rejectOnEmpty: true,
+      });
+    } catch (err) {
+      throw new Error("Product not found");
+    }
+
+    return new Product(
+      productDB.id,
+      productDB.name,
+      productDB.description,
+      productDB.price
+    );
   }
-  create(entity: Order): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async create(entity: Product): Promise<void> {
+    await ProductModel.create({
+      id: entity.id,
+      name: entity.name,
+      description: entity.description,
+      price: entity.price,
+    });
   }
-  update(entity: Order): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async update(entity: Product): Promise<void> {
+    await ProductModel.update(
+      {
+        name: entity.name,
+        description: entity.description,
+        price: entity.price,
+      },
+      { where: { id: entity.id } }
+    );
   }
 }

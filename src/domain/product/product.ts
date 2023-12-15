@@ -28,4 +28,7 @@ export default class Product {
   get id() {
     return this._id;
   }
+  set price(newPrice) {
+    this._price = newPrice;
+  }
 }
