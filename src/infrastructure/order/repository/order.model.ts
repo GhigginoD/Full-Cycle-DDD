@@ -15,15 +15,15 @@ import OrderItemModel from "./order-item.model";
   timestamps: false,
 })
 export default class OrderModel extends Model {
-  @Column
   @PrimaryKey
+  @Column
   declare id: string;
 
   @Column({ allowNull: true })
   declare total: number;
 
-  @Column
   @ForeignKey(() => CustomerModel)
+  @Column({ allowNull: false })
   declare customerId: string;
 
   @BelongsTo(() => CustomerModel)
