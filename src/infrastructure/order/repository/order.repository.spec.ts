@@ -96,13 +96,14 @@ describe("Order repository test", () => {
       1,
       product2.id
     );
-    order.addItems([orderItem2]);
     await orderRepository.create(order);
+    order.addItems([orderItem2]);
 
-    // await orderRepository.update(order);
-    // const orderDB = await orderRepository.find(order.orderId);
-    // expect(orderDB.total()).toEqual(0);
-    // expect(orderDB.items.length).toEqual(0);
-    // expect(order.total).toEqual(order.total());
+    await orderRepository.update(order);
+    const orderDB = await orderRepository.find(order.orderId);
+
+    expect(orderDB).toEqual(order);
+    expect(orderDB.items.length).toEqual(2);
+    expect(orderDB.total()).toEqual(order.total());
   });
 });

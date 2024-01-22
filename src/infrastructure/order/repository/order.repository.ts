@@ -71,10 +71,16 @@ export default class OrderRepository implements OrderRepositoryInterface {
     );
   }
   async update(entity: Order): Promise<void> {
-    const orderDB = await OrderModel.findByPk(entity.orderId, {
-      include: OrderItemModel,
+    await OrderItemModel.destroy({ where: { orderId: entity.orderId } });
+    entity.items.forEach(async (item) => {
+      await OrderItemModel.create({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        orderId: entity.orderId,
+        productId: item.productId,
+        quantity: item.quantity,
+      });
     });
-    await orderDB?.$remove("items", entity.items.length);
-    await orderDB?.save();
   }
 }
