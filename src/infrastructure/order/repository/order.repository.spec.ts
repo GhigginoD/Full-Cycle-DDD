@@ -106,4 +106,25 @@ describe("Order repository test", () => {
     expect(orderDB.items.length).toEqual(2);
     expect(orderDB.total()).toEqual(order.total());
   });
+
+  it("Should return list of orders", async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("1", "Davi", "davi@gmail.com");
+    const customer2 = new Customer("2", "Victor", "victor@gmail.com");
+    await customerRepository.create(customer);
+    await customerRepository.create(customer2);
+
+    const productRepository = new ProductRepository();
+    const product = new Product("1", "Produto 1", "", 249.99);
+    await productRepository.create(product);
+
+    const orderRepository = new OrderRepository();
+    const order = new Order("1", customer.id);
+    const order2 = new Order("2", customer2.id);
+    await orderRepository.create(order);
+    await orderRepository.create(order2);
+
+    const ordersDB = await orderRepository.findAll();
+    expect(ordersDB.length).toBe(2);
+  });
 });
