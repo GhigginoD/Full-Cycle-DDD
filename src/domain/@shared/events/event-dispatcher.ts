@@ -22,7 +22,12 @@ export class EventDispatcher implements EventDispatcherInterface {
   }
 
   notify(event: EventInterface): void {
-    throw new Error("Method not implemented.");
+    const eventName = event.constructor.name;
+    if (this.eventHandlers[eventName]) {
+      this.getEventHandlers[eventName].forEach((eventHandler) => {
+        eventHandler.handler(event);
+      });
+    }
   }
 
   unregisterAll(): void {
