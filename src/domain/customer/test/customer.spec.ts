@@ -1,4 +1,4 @@
-import Customer from "./customer";
+import Customer from "../entity/customer";
 
 describe("Customer unit tests", () => {
   it("Should throw error when you create a Customer", () => {

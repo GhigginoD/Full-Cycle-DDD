@@ -1,6 +1,7 @@
-import Order from "../../../domain/order/order";
-import OrderRepositoryInterface from "../../../domain/order/order-repository.interface";
-import OrderItem from "../../../domain/order/orderItem";
+import Order from "../../../domain/checkout/entity/order";
+import OrderItem from "../../../domain/checkout/entity/orderItem";
+import OrderRepositoryInterface from "../../../domain/checkout/repository-interface/order-repository.interface";
+
 import ProductModel from "../../product/repository/product.model";
 import OrderItemModel from "./order-item.model";
 import OrderModel from "./order.model";
