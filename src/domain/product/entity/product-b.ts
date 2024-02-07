@@ -1,12 +1,17 @@
 import ProductInterface from "./product.interface";
 
-export default class Product implements ProductInterface {
+export default class ProductB implements ProductInterface {
   private _id: string;
   private _name: string;
   private _description: string;
   private _price: number;
 
-  constructor(id: string, name: string, description: string, price: number) {
+  constructor(
+    id: string,
+    name: string,
+    description: string = "",
+    price: number
+  ) {
     this._id = id;
     this._name = name;
     this._description = description;
@@ -19,7 +24,7 @@ export default class Product implements ProductInterface {
     if (this._price <= 0) throw new Error("price should be greater than zero");
   }
   get name() {
-    return this._name;
+    return this._name + "-B";
   }
   get description() {
     return this._description;
