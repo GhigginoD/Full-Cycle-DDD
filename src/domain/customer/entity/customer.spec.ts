@@ -1,4 +1,5 @@
-import Customer from "../entity/customer";
+import Address from "./address";
+import Customer from "./customer";
 
 describe("Customer unit tests", () => {
   it("Should throw error when you create a Customer", () => {
@@ -26,5 +27,11 @@ describe("Customer unit tests", () => {
     const customer = new Customer("1", "Davi");
     customer.addRewardPoints(100);
     expect(customer.rewardPoints).toBe(200);
+  });
+  it("Should dispatcher event edited address", () => {
+    const customer = new Customer("1", "Davi");
+    const address = new Address("street", 1, "20-32", "city");
+    customer.changeAddress(address);
+    expect(customer.id).toBeDefined;
   });
 });

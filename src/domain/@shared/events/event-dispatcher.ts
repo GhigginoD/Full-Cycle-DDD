@@ -5,14 +5,14 @@ import EventInterface from "./event.interface";
 export class EventDispatcher implements EventDispatcherInterface {
   private eventHandlers: { [evenNname: string]: EventHandlerInterface[] } = {};
 
-  register(eventName: string, eventHandler: EventHandlerInterface): void {
+  addEvent(eventName: string, eventHandler: EventHandlerInterface): void {
     if (!this.eventHandlers[eventName]) {
       this.eventHandlers[eventName] = [];
     }
     this.eventHandlers[eventName].push(eventHandler);
   }
 
-  unregister(eventName: string, eventHandler: EventHandlerInterface): void {
+  removeEvent(eventName: string, eventHandler: EventHandlerInterface): void {
     if (this.eventHandlers[eventName]) {
       const index = this.eventHandlers[eventName].indexOf(eventHandler);
       if (index !== -1) {

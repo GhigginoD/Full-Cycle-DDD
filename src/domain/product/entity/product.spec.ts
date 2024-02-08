@@ -1,4 +1,4 @@
-import Product from "../entity/product";
+import Product from "./product";
 
 describe("Products units tests", () => {
   it("Should throw error when create a product with id empty", () => {

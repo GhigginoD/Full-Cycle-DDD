@@ -7,7 +7,7 @@ describe("Domain Events Tests", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedhandler();
 
-    eventDispatcher.register("ProductCreatedEvent", eventHandler);
+    eventDispatcher.addEvent("ProductCreatedEvent", eventHandler);
 
     expect(
       eventDispatcher.getEventHandlers["ProductCreatedEvent"]
@@ -25,7 +25,7 @@ describe("Domain Events Tests", () => {
   it("Should unregister one event handlers", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedhandler();
-    eventDispatcher.register("ProductCreatedEvent", eventHandler);
+    eventDispatcher.addEvent("ProductCreatedEvent", eventHandler);
 
     expect(
       eventDispatcher.getEventHandlers["ProductCreatedEvent"][0]
@@ -37,7 +37,7 @@ describe("Domain Events Tests", () => {
       1
     );
 
-    eventDispatcher.unregister("ProductCreatedEvent", eventHandler);
+    eventDispatcher.removeEvent("ProductCreatedEvent", eventHandler);
 
     expect(
       eventDispatcher.getEventHandlers["ProductCreatedEvent"]
@@ -51,7 +51,7 @@ describe("Domain Events Tests", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedhandler();
 
-    eventDispatcher.register("Product", eventHandler);
+    eventDispatcher.addEvent("Product", eventHandler);
     eventDispatcher.unregisterAll();
 
     expect(
@@ -69,7 +69,7 @@ describe("Domain Events Tests", () => {
       price: 100,
     });
 
-    eventDispatcher.register("ProductCreatedEvent", eventHandler);
+    eventDispatcher.addEvent("ProductCreatedEvent", eventHandler);
 
     expect(
       eventDispatcher.getEventHandlers["ProductCreatedEvent"][0]

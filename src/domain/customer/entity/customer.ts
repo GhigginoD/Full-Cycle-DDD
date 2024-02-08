@@ -1,9 +1,16 @@
-export default class Customer {
+import { EventDispatcher } from "../../@shared/events/event-dispatcher";
+import { CustomerInterface } from "../customer.interface";
+import CustomerEditedAddressEvent from "../event/customer-edited-address-event";
+import CustomerEditedAddressHandler from "../event/handler/customer-edited-address.handler";
+import Address from "./address";
+
+export default class Customer implements CustomerInterface {
   private _id: string;
   private _name: string;
   private _email: string | undefined;
   private _active: boolean;
   private _rewardPoints: number;
+  private _address?: Address;
 
   constructor(
     id: string,
@@ -28,7 +35,18 @@ export default class Customer {
   changeStatus() {
     this._active = !this._active;
   }
+  changeAddress(address: Address) {
+    this._address = address;
+    const eventDispatcher = new EventDispatcher();
+    const customerEditedAddressHandler = new CustomerEditedAddressHandler();
+    const customerEditedAddressEvent = new CustomerEditedAddressEvent(this);
 
+    eventDispatcher.addEvent(
+      "CustomerEditedAddressEvent",
+      customerEditedAddressHandler
+    );
+    eventDispatcher.notify(customerEditedAddressEvent);
+  }
   addRewardPoints(points: number) {
     this._rewardPoints += points;
   }
@@ -46,6 +64,9 @@ export default class Customer {
   }
   get id() {
     return this._id;
+  }
+  get address() {
+    return this._address;
   }
   get email(): string | undefined {
     return this._email;
