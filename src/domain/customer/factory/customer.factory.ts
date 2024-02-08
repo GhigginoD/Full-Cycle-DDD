@@ -1,28 +1,23 @@
 import { v4 as uuid } from "uuid";
-import { EventDispatcher } from "../../@shared/events/event-dispatcher";
-import EventHandlerInterface from "../../@shared/events/event-handler.interface";
-import { CustomerInterface } from "../customer.interface";
 import Customer from "../entity/customer";
-import CustomerCreatedEvent from "../event/customer-created-event";
+import CustomerCreatedHandler, {
+  CustomerCreatedHandler2,
+} from "../event/handler/customer-created-handler";
 
 export default class CustomerFactory {
-  static create(name: string, email?: string): CustomerInterface {
+  static create(name: string, email?: string): Customer {
     const customer = new Customer(uuid(), name, email);
     return customer;
   }
 
-  static createWithLogger(
-    name: string,
-    events: EventHandlerInterface[]
-  ): CustomerInterface {
+  static createWithLogger(name: string): Customer {
     const customer = new Customer(uuid(), name);
+    const eventHandler = new CustomerCreatedHandler();
+    const eventHandler2 = new CustomerCreatedHandler2();
 
-    const eventDispatcher = new EventDispatcher();
-    const customerCreatedEvent = new CustomerCreatedEvent(customer);
-    events.map((event) => {
-      eventDispatcher.addEvent("CustomerCreatedEvent", event);
-    });
-    eventDispatcher.notify(customerCreatedEvent);
+    customer.addEvent("CustomerCreatedEvent", eventHandler);
+    customer.addEvent("CustomerCreatedEvent", eventHandler2);
+
     return customer;
   }
 }

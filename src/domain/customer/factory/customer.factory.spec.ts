@@ -1,29 +1,20 @@
-import CustomerCreatedHandler, {
-  CustomerCreatedHandler2,
-} from "../event/handler/customer-created-handler";
+import CustomerCreatedEvent from "../event/customer-created-event";
 import CustomerFactory from "./customer.factory";
 
 describe("Customer factory tests", () => {
   it("should create a customer factory with events", () => {
-    const eventHandler = new CustomerCreatedHandler();
-    const eventHandler2 = new CustomerCreatedHandler2();
-    const spyEventHandler = jest.spyOn(eventHandler, "handler");
-    const spyEventHandler2 = jest.spyOn(eventHandler2, "handler");
-
-    const customer = CustomerFactory.createWithLogger("Davi", [
-      eventHandler,
-      eventHandler2,
-    ]);
+    const customer = CustomerFactory.createWithLogger("Davi");
+    const customerCreatedEvent = new CustomerCreatedEvent(customer);
+    customer.notify(customerCreatedEvent);
 
     expect(customer.id).toBeDefined();
     expect(customer.name).toBe("Davi");
     expect(customer.active).toBe(true);
-    expect(spyEventHandler).toHaveBeenCalled();
-    expect(spyEventHandler2).toHaveBeenCalled();
+    expect(customer.getEventHandlers["CustomerCreatedEvent"]).toBeDefined();
+    expect(customer.getEventHandlers["CustomerCreatedEvent"].length).toBe(2);
   });
   it("should create a customer factory", () => {
     const customer = CustomerFactory.create("Davi");
-
     expect(customer.id).toBeDefined();
     expect(customer.name).toBe("Davi");
     expect(customer.active).toBe(true);

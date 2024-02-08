@@ -3,7 +3,7 @@ import EventHandlerInterface from "./event-handler.interface";
 import EventInterface from "./event.interface";
 
 export class EventDispatcher implements EventDispatcherInterface {
-  private eventHandlers: { [evenNname: string]: EventHandlerInterface[] } = {};
+  eventHandlers: { [evenNname: string]: EventHandlerInterface[] } = {};
 
   addEvent(eventName: string, eventHandler: EventHandlerInterface): void {
     if (!this.eventHandlers[eventName]) {
