@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import Customer from "../entity/customer";
+import CustomerCreatedEvent from "../event/customer-created-event";
 import CustomerCreatedHandler, {
   CustomerCreatedHandler2,
 } from "../event/handler/customer-created-handler";
@@ -14,9 +15,10 @@ export default class CustomerFactory {
     const customer = new Customer(uuid(), name);
     const eventHandler = new CustomerCreatedHandler();
     const eventHandler2 = new CustomerCreatedHandler2();
+    const customerCreatedEvent = new CustomerCreatedEvent(customer);
 
-    customer.addEvent("CustomerCreatedEvent", eventHandler);
-    customer.addEvent("CustomerCreatedEvent", eventHandler2);
+    customer.addEvent(customerCreatedEvent.constructor.name, eventHandler);
+    customer.addEvent(customerCreatedEvent.constructor.name, eventHandler2);
 
     return customer;
   }

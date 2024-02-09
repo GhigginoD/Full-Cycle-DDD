@@ -1,5 +1,6 @@
 import { EventDispatcher } from "../../@shared/events/event-dispatcher";
 import { CustomerInterface } from "../customer.interface";
+import CustomerEditedAddressEvent from "../event/customer-edited-address-event";
 import CustomerEditedAddressHandler from "../event/handler/customer-edited-address.handler";
 import Address from "./address";
 
@@ -41,8 +42,10 @@ export default class Customer
 
   changeAddress(address: Address) {
     this._address = address;
+    const customerEditedAddressEvent = new CustomerEditedAddressEvent(this);
+
     this.addEvent(
-      "CustomerEditedAddressEvent",
+      customerEditedAddressEvent.constructor.name,
       new CustomerEditedAddressHandler()
     );
   }

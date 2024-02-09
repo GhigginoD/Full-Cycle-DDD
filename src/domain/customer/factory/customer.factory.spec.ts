@@ -10,9 +10,14 @@ describe("Customer factory tests", () => {
     expect(customer.id).toBeDefined();
     expect(customer.name).toBe("Davi");
     expect(customer.active).toBe(true);
-    expect(customer.getEventHandlers["CustomerCreatedEvent"]).toBeDefined();
-    expect(customer.getEventHandlers["CustomerCreatedEvent"].length).toBe(2);
+    expect(
+      customer.getEventHandlers[customerCreatedEvent.constructor.name]
+    ).toBeDefined();
+    expect(
+      customer.getEventHandlers[customerCreatedEvent.constructor.name].length
+    ).toBe(2);
   });
+
   it("should create a customer factory", () => {
     const customer = CustomerFactory.create("Davi");
     expect(customer.id).toBeDefined();

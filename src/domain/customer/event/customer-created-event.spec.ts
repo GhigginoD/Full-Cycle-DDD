@@ -36,10 +36,11 @@ describe("Customer event test", () => {
     expect(customer.name).toBe("Davi");
     expect(customer.active).toBe(true);
     expect(
-      customer.getEventHandlers["CustomerEditedAddressEvent"]
+      customer.getEventHandlers[customerEditedAddressEvent.constructor.name]
     ).toBeDefined();
-    expect(customer.getEventHandlers["CustomerEditedAddressEvent"].length).toBe(
-      1
-    );
+    expect(
+      customer.getEventHandlers[customerEditedAddressEvent.constructor.name]
+        .length
+    ).toBe(1);
   });
 });
