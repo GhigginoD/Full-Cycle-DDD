@@ -1,4 +1,5 @@
 import Address from "../entity/address";
+import Customer from "../entity/customer";
 import CustomerFactory from "../factory/customer.factory";
 import { EventDispatcher } from "./../../@shared/events/event-dispatcher";
 import CustomerCreatedEvent from "./customer-created-event";
@@ -11,7 +12,9 @@ describe("Customer event test", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new CustomerCreatedHandler();
     const eventHandler2 = new CustomerCreatedHandler2();
-    const customerCreatedEvent = new CustomerCreatedEvent({});
+    const customerCreatedEvent = new CustomerCreatedEvent(
+      new Customer("1", "Davi")
+    );
 
     const spyEventHandler = jest.spyOn(eventHandler, "handler");
     const spyEventHandler2 = jest.spyOn(eventHandler2, "handler");
