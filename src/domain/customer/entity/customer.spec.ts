@@ -28,10 +28,13 @@ describe("Customer unit tests", () => {
     customer.addRewardPoints(100);
     expect(customer.rewardPoints).toBe(200);
   });
-  it("Should dispatcher event edited address", () => {
+  it("Should dispatcher event when i edited address", () => {
     const customer = new Customer("1", "Davi");
     const address = new Address("street", 1, "20-32", "city");
     customer.changeAddress(address);
-    expect(customer.id).toBeDefined;
+
+    expect(customer.id).toBeDefined();
+    expect(customer.eventHandlers["CustomerEditedAddressEvent"]).toBeDefined();
+    expect(customer.eventHandlers["CustomerEditedAddressEvent"].length).toBe(1);
   });
 });

@@ -5,7 +5,7 @@ export default class CustomerEditedAddressEvent implements EventInterface {
   dataTimeOccurred: Date;
   eventData: Customer;
 
-  constructor(eventData: any) {
+  constructor(eventData: Customer) {
     this.eventData = eventData;
     this.dataTimeOccurred = new Date();
   }

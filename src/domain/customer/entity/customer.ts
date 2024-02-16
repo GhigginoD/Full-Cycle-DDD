@@ -4,7 +4,10 @@ import CustomerEditedAddressEvent from "../event/customer-edited-address-event";
 import CustomerEditedAddressHandler from "../event/handler/customer-edited-address.handler";
 import Address from "./address";
 
-export default class Customer implements CustomerInterface {
+export default class Customer
+  extends EventDispatcher
+  implements CustomerInterface
+{
   private _id: string;
   private _name: string;
   private _email: string | undefined;
@@ -19,6 +22,7 @@ export default class Customer implements CustomerInterface {
     active?: boolean,
     rewardPoints?: number
   ) {
+    super();
     this._id = id;
     this._name = name;
     this._active = active || true;
@@ -35,18 +39,17 @@ export default class Customer implements CustomerInterface {
   changeStatus() {
     this._active = !this._active;
   }
+
   changeAddress(address: Address) {
     this._address = address;
-    const eventDispatcher = new EventDispatcher();
-    const customerEditedAddressHandler = new CustomerEditedAddressHandler();
     const customerEditedAddressEvent = new CustomerEditedAddressEvent(this);
 
-    eventDispatcher.addEvent(
-      "CustomerEditedAddressEvent",
-      customerEditedAddressHandler
+    this.addEvent(
+      customerEditedAddressEvent.constructor.name,
+      new CustomerEditedAddressHandler()
     );
-    eventDispatcher.notify(customerEditedAddressEvent);
   }
+
   addRewardPoints(points: number) {
     this._rewardPoints += points;
   }
